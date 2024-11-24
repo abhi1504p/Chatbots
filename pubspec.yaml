@@ -48,6 +48,10 @@ dependencies:
   cloud_firestore:
   fluttertoast:
   lottie: ^3.1.3
+  get: ^4.6.6
+  flutter_animate:
+  dash_chat_2:
+  chat_gpt_sdk:
 
 dev_dependencies:
   flutter_test:
