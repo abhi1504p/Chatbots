@@ -1,8 +1,14 @@
+
 import 'package:chatbot/Pages/Selectpage.dart';
-import 'package:chatbot/Widgets/Roundbutton.dart';
+
+import 'package:chatbot/auth/services_auth.dart';
+import 'package:chatbot/features/chatbot_features.dart';
+import 'package:chatbot/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
+import '../Pages/onboarding.dart';
 import 'SignupPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,33 +19,32 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  final authservice _auths = authservice();
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  final auth = FirebaseAuth.instance;
+
 
   @override
-  void _login() {
-    if (_formKey.currentState!.validate()) {
-      auth.signInWithEmailAndPassword(
-          email: _emailController.text.toString(),
-          password: _passwordController.text.toString());
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => selectpage()));
-    }
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
+
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text("Login")),
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.purple,
+        backgroundColor: Theme.of(context).lightTextColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          key: _formKey,
+
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -89,8 +94,8 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style:
-                      ElevatedButton.styleFrom(backgroundColor: Colors.black),
-                  onPressed: _login,
+                  ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                  onPressed: signin,
                   child: Text(
                     'Login',
                     style: TextStyle(fontSize: 20, color: Colors.white),
@@ -119,5 +124,19 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<void> signin() async {
+    String emailname = _emailController.text;
+    String passwordname = _passwordController.text;
+    User? user = await _auths.signInwithemailandPassword(
+        emailname, passwordname);
+    if (user != null) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => OnboardingScreen()));
+    }
+    else {
+      print("some error occured");
+    }
   }
 }

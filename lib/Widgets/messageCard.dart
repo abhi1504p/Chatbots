@@ -1,3 +1,5 @@
+import 'package:chatbot/features/chatbot_features.dart';
+import 'package:chatbot/main.dart';
 import 'package:flutter/material.dart';
 
 import '../Helper/Global.dart';
@@ -9,6 +11,7 @@ class messageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const r = Radius.circular(15);
     return Message.msgType==MessageType.bot?Row(
       children: [
 
@@ -23,11 +26,12 @@ class messageCard extends StatelessWidget {
 
         Container(
             constraints: BoxConstraints(maxWidth: mq.width*0.6),
-            margin: EdgeInsets.only(bottom: 2,left: 5),
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+            margin: EdgeInsets.only(bottom:mq.height*0.02,left: mq.width*0.02),
+            padding: EdgeInsets.symmetric(horizontal: mq.width*0.02, vertical: mq.height*0.01),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.blue),
+              borderRadius:  BorderRadius.only(
+                  topLeft: r, topRight: r, bottomRight: r) ,
+              border: Border.all(color: Theme.of(context).lightTextColor),
             ),
             child: Text(Message.msg,textAlign: TextAlign.center,)),
       ],
@@ -44,11 +48,12 @@ class messageCard extends StatelessWidget {
 
         Container(
           constraints: BoxConstraints(maxWidth: mq.width*0.6),
-            margin: EdgeInsets.only(bottom: 2,left: 5),
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+            margin: EdgeInsets.only(bottom:mq.height*0.02,right: mq.width*0.02),
+            padding: EdgeInsets.symmetric(horizontal: mq.width*0.02, vertical: mq.height*0.01),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.blue),
+              borderRadius:BorderRadius.only(
+                  topLeft: r, topRight: r, bottomLeft: r),
+              border: Border.all(color: Theme.of(context).lightTextColor),
             ),
             child: Text(Message.msg,textAlign: TextAlign.center,))
       ],

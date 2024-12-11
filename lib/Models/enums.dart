@@ -1,7 +1,6 @@
-import 'package:chatbot/SplashScreen/SplashScreen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../features/chatbot_features.dart';
 import '../features/image_feature.dart';
@@ -13,7 +12,7 @@ enum Aiselection{
 }
 extension Myaiselection on Aiselection{
   String get title=>switch(this){
-    // TODO: Handle this case.
+
     Aiselection.aichatbot => "Ai ChatBot",
     // TODO: Handle this case.
     Aiselection.aiimage => "Ai Image Finder",
@@ -42,6 +41,6 @@ extension Myaiselection on Aiselection{
   // TODO: Handle this case.
     Aiselection.aiimage =>()=>Get.to(()=>image_feature()),
   // TODO: Handle this case.
-    Aiselection.aitranslator =>()=>Get.to(()=>translator_features())
+    Aiselection.aitranslator =>()=>Get.to(()=>LanguageTranslateScreen())
   };
 }

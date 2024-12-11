@@ -1,5 +1,8 @@
+import 'package:chatbot/Pages/Selectpage.dart';
 import 'package:chatbot/Widgets/Roundbutton.dart';
 import 'package:chatbot/auth/Loginpage.dart';
+import 'package:chatbot/auth/services_auth.dart';
+import 'package:chatbot/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,28 +11,22 @@ class Signuppage extends StatefulWidget {
   const Signuppage({super.key});
 
   @override
-  State<Signuppage> createState() => _LoginPageState();
+  State<Signuppage> createState() => _SignuppageState();
 }
-
-class _LoginPageState extends State<Signuppage> {
+class _SignuppageState extends State<Signuppage> {
+  final authservice _auth=authservice();
+  final TextEditingController _name = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  FirebaseAuth auth=FirebaseAuth.instance;
+
+
   @override
-  void _login() {
-    if (_formKey.currentState!.validate()) {
-      auth.createUserWithEmailAndPassword(email:_emailController.text.toString().trim(), password:_passwordController.text.toString());
 
-      // Implement your login logic here
-
-    }
-
-  }
   void dispose(){
-    super.dispose();
+    _name.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -37,17 +34,29 @@ class _LoginPageState extends State<Signuppage> {
       appBar: AppBar(
         title: const Center(child: Text("Sign Up")),
 
-        backgroundColor: Colors.purple,
+        backgroundColor: Theme.of(context).lightTextColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          key: _formKey,
+
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Email TextField
-              TextFormField(
+
+              // name TextField
+            TextFormField(
+            controller:_name,
+            keyboardType: TextInputType.name,
+            decoration: const InputDecoration(
+              labelText:'Name',
+              border: OutlineInputBorder(),
+            ),
+
+          ),
+            SizedBox(height: 10,),
+
+            TextFormField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
@@ -92,7 +101,7 @@ class _LoginPageState extends State<Signuppage> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
-                  onPressed: _login,
+                  onPressed: signup,
                   child: const Text('Sign Up',style: TextStyle(fontSize: 20,color: Colors.white),),
                 ),
               ),
@@ -111,4 +120,18 @@ class _LoginPageState extends State<Signuppage> {
       ),
     );
   }
+  Future<void> signup() async {
+    String username=_name.text;
+    String emailname=_emailController.text;
+    String passwordname=_passwordController.text;
+    User? user=await _auth.signupwithemailandPassword(emailname, passwordname);
+    if(user !=null){
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>selectpage()));
+    }
+    else{
+      print("some error occured");
+    }
+
+  }
 }
+

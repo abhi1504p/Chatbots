@@ -19,7 +19,7 @@ class splashscreen {
    else{
      Timer(
          Duration(seconds: 3),
-             () => Get.off(()=>selectpage()));
+             () => Get.off(()=>LoginPage()));
 
    }
   }

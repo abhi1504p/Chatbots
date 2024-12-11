@@ -40,8 +40,12 @@ class Homecard extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
+
+
           ],
-        ),
+
+        )
+        ,
       ),
     ).animate()
         .scale(duration: 2.seconds) ;
