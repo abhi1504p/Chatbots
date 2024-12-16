@@ -6,11 +6,13 @@ import 'package:chatbot/Helper/Global.dart';
 import 'package:http/http.dart';
 
 class Apis {
+
+  // String a="AIzaSyAWwJVRyWlJGIa-8wYa_n5bp4kNKf0SXMI";
   static Future<String> getanswer(String question) async {
     try {
       final res = await post(
         Uri.parse(
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyAWwJVRyWlJGIa-8wYa_n5bp4kNKf0SXMI"),
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=a"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
 
