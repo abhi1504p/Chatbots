@@ -53,6 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
+                  hintText: "Enter the Email",
                   labelText: 'Email',
                   border: OutlineInputBorder(),
                 ),
@@ -129,8 +130,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> signin() async {
     String emailname = _emailController.text;
     String passwordname = _passwordController.text;
-    User? user = await _auths.signInwithemailandPassword(
-        emailname, passwordname);
+    User? user = await _auths.signInwithemailandPassword(         emailname, passwordname);
     if (user != null) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => OnboardingScreen()));
